@@ -16,6 +16,7 @@ XAUTH=/tmp/.docker.xauth
 docker stop ARM_02 || true && docker rm ARM_02 || true
 
 docker run -it \
+    --workdir="/arm_ws" \
     --env="DISPLAY=$DISPLAY" \
     --env="QT_X11_NO_MITSHM=1" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
