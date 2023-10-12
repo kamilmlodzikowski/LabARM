@@ -13,9 +13,10 @@ XAUTH=/tmp/.docker.xauth
      chmod a+r $XAUTH
  fi
 
-docker stop ARM_02 || true && docker rm ARM_02 || true
+docker stop ARM_03 || true && docker rm ARM_03 || true
 
 docker run -it \
+    --workdir="/arm_ws" \
     --env="DISPLAY=$DISPLAY" \
     --env="QT_X11_NO_MITSHM=1" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
@@ -23,6 +24,6 @@ docker run -it \
     --volume="$XAUTH:$XAUTH" \
     --privileged \
     --network=host \
-    --name="ARM_02" \
-    osrf/ros:noetic-desktop-full \
+    --name="ARM_03" \
+    arm/lab03 \
     /bin/bash
