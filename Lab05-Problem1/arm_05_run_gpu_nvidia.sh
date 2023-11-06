@@ -1,8 +1,8 @@
 xhost +local:root
 
 # BUILD THE IMAGE
-ROS_IMAGE="arm/image04"
-ROS_CONTAINER="ARM_04"
+ROS_IMAGE="arm/lab05"
+ROS_CONTAINER="ARM_05"
 
 XAUTH=/tmp/.docker.xauth
  if [ ! -f $XAUTH ]
@@ -16,15 +16,18 @@ XAUTH=/tmp/.docker.xauth
      fi
      chmod a+r $XAUTH
  fi
- 
-docker stop ARM_04 || true && docker rm ARM_04 || true
+
+docker stop $ROS_CONTAINER || true && docker rm $ROS_CONTAINER || true
 
 docker run -it \
+    --gpus all \
     --env="DISPLAY=$DISPLAY" \
     --env="QT_X11_NO_MITSHM=1" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
     --env="XAUTHORITY=$XAUTH" \
     --volume="$XAUTH:$XAUTH" \
+    --env="NVIDIA_VISIBLE_DEVICES=all" \
+    --env="NVIDIA_DRIVER_CAPABILITIES=all" \
     --privileged \
     --network=host \
     --name="$ROS_CONTAINER" \

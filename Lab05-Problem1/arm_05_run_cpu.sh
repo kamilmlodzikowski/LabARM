@@ -1,8 +1,8 @@
 xhost +local:root
 
 # BUILD THE IMAGE
-ROS_IMAGE="arm/image03"
-ROS_CONTAINER="ARM_03"
+ROS_IMAGE="arm/lab05"
+ROS_CONTAINER="ARM_05"
 
 XAUTH=/tmp/.docker.xauth
  if [ ! -f $XAUTH ]
@@ -17,7 +17,7 @@ XAUTH=/tmp/.docker.xauth
      chmod a+r $XAUTH
  fi
  
-docker stop ARM_03 || true && docker rm ARM_03 || true
+docker stop $ROS_CONTAINER || true && docker rm $ROS_CONTAINER || true
 
 docker run -it \
     --env="DISPLAY=$DISPLAY" \
