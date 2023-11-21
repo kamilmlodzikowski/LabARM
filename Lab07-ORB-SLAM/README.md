@@ -1,24 +1,24 @@
-# Lab 06 - SLAM 3D
+# Lab 07 - ORB-SLAM3
 ## Download Dockerfile and build image
 ```shell
-wget https://raw.githubusercontent.com/kamilmlodzikowski/LabARM/main/Lab06-SLAM3D/Dockerfile
-wget https://raw.githubusercontent.com/kamilmlodzikowski/LabARM/main/Lab06-SLAM3D/arm_06_build.sh
-bash ./arm_06_build.sh 4
+wget https://raw.githubusercontent.com/kamilmlodzikowski/LabARM/main/Lab07-ORB-SLAM/Dockerfile
+wget https://raw.githubusercontent.com/kamilmlodzikowski/LabARM/main/Lab07-ORB-SLAM/arm_07_build.sh
+bash ./arm_07_build.sh 4
 ```
 
-The ```arm_06_build.sh``` script accepts number of workers as an argument for parallel compilation:
+The ```arm_07_build.sh``` script accepts number of workers as an argument for parallel compilation:
 ```shell
-bash ./arm_06_build.sh <number_of_workers>
+bash ./arm_07_build.sh <number_of_workers>
 ```
 
 ## Running on Nvidia GPU
 ```shell
-wget https://raw.githubusercontent.com/kamilmlodzikowski/LabARM/main/Lab06-SLAM3D/arm_06_run_gpu_nvidia.sh
-bash ./arm_06_run_gpu_nvidia.sh
+wget https://raw.githubusercontent.com/kamilmlodzikowski/LabARM/main/Lab07-ORB-SLAM/arm_07_run_gpu_nvidia.sh
+bash ./arm_07_run_gpu_nvidia.sh
 ```
 
 ## Running on CPU
 ```shell
-wget https://raw.githubusercontent.com/kamilmlodzikowski/LabARM/main/Lab06-SLAM3D/arm_06_run_cpu.sh
-bash ./arm_06_run_cpu.sh
+wget https://raw.githubusercontent.com/kamilmlodzikowski/LabARM/main/Lab07-ORB-SLAM/arm_07_run_cpu.sh
+bash ./arm_07_run_cpu.sh
 ```
