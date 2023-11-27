@@ -44,11 +44,9 @@ RUN make install
 
 # ORB_SLAM3_ROS2
 WORKDIR /arm_ws/src
-RUN git clone https://github.com/zang09/ORB_SLAM3_ROS2.git orbslam3_ros2
+RUN git clone -b humble https://github.com/kamilmlodzikowski/ORB_SLAM3_ROS2 orbslam3_ros2
 WORKDIR /arm_ws/src/orbslam3_ros2/vocabulary 
 RUN tar xvzf ORBvoc.txt.tar.gz
-WORKDIR /arm_ws/src/orbslam3_ros2/config/stereo
-RUN wget https://raw.githubusercontent.com/MichalNowicki/ORB_SLAM3/master/Examples/Stereo/PP.yaml
 
 # DOWNLOAD 1st ROS Bag and convert it to ROS2
 WORKDIR /arm_ws
