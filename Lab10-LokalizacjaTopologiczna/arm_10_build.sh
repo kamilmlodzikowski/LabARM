@@ -1,7 +1,7 @@
 xhost +local:root
 
 # BUILD THE IMAGE
-ROS_IMAGE="arm/lab07"
+ROS_IMAGE="arm/lab10"
 if [ -z "$1" ]
 	then
 		echo "RUNNING WITH 1 WORKER"
@@ -10,4 +10,4 @@ if [ -z "$1" ]
 		echo "RUNNING WITH $1 WORKERS"
 		WORKERS=$1
 fi
-docker build --no-cache -f Dockerfile --build-arg parallel_workers=$WORKERS -t $ROS_IMAGE ./..
+docker build -f Dockerfile --build-arg parallel_workers=$WORKERS -t $ROS_IMAGE ./..

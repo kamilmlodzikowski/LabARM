@@ -11,8 +11,8 @@ ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPA
 ARG parallel_workers=1
 
 # INSTALL SOME ESSENTIAL PROGRAMS
-RUN apt update     && \
-    apt install -y    \
+RUN apt update
+RUN apt install -y    \
         git wget bash-completion unzip python3-pip ros-$ROS_DISTRO-vision-opencv ros-$ROS_DISTRO-message-filters libopencv-dev python3-opencv python3-dev python3-numpy python3-yaml libeigen3-dev libsuitesparse-dev libboost-dev libboost-iostreams-dev libboost-filesystem-dev libboost-date-time-dev libboost-serialization-dev libboost-thread-dev libblas-dev liblapack-dev libgflags-dev libgoogle-glog-dev libqglviewer-dev-qt5
 RUN pip3 install rosbags
 
