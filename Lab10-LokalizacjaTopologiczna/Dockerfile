@@ -24,11 +24,12 @@ RUN /bin/bash -c ". /opt/ros/humble/setup.bash; colcon build --parallel-workers 
 
 WORKDIR /arm_ws
 RUN wget https://raw.githubusercontent.com/kamilmlodzikowski/LabARM/main/Lab10-LokalizacjaTopologiczna/rtabmap.rviz
-RUN /bin/bash -c ". /opt/ros/humble/setup.bash; colcon build --parallel-workers $parallel_workers --symlink-install"\
+RUN /bin/bash -c ". /opt/ros/humble/setup.bash; colcon build --parallel-workers $parallel_workers --symlink-install"
 
 RUN ldconfig
 
 RUN mkdir bags
+WORKDIR /arm_ws/bags
 RUN wget http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/machine_hall/MH_03_medium/MH_03_medium.bag
 RUN rosbags-convert MH_03_medium.bag
 RUN rm MH_03_medium.bag
