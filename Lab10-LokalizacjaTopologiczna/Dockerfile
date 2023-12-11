@@ -14,7 +14,7 @@ ARG parallel_workers=1
 # INSTALL SOME ESSENTIAL PROGRAMS
 RUN apt update
 RUN apt install -y    \
-        git wget bash-completion unzip python3-pip ros-$ROS_DISTRO-navigation2 ros-$ROS_DISTRO-nav2-bringup ros-$ROS_DISTRO-rtabmap-ros
+        git wget bash-completion unzip python3-pip ros-$ROS_DISTRO-navigation2 ros-$ROS_DISTRO-nav2-bringup ros-$ROS_DISTRO-rtabmap-ros ros-$ROS_DISTRO-imu-complementary-filter
 RUN pip3 install rosbags
 
 # CLONE TURTLEBOT3 GIT REPOS
@@ -24,7 +24,6 @@ RUN /bin/bash -c ". /opt/ros/humble/setup.bash; colcon build --parallel-workers 
 
 WORKDIR /arm_ws
 RUN wget https://raw.githubusercontent.com/kamilmlodzikowski/LabARM/main/Lab10-LokalizacjaTopologiczna/rtabmap.rviz
-RUN /bin/bash -c ". /opt/ros/humble/setup.bash; colcon build --parallel-workers $parallel_workers --symlink-install"
 
 RUN ldconfig
 
