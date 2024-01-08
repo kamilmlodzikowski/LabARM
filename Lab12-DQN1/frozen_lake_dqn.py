@@ -14,13 +14,11 @@ class DQN(nn.Module):
         super().__init__()
 
         # Define network layers
-        self.fc1 = nn.Linear(in_states, h1_nodes*10)   # first fully connected layer
-        self.fc2 = nn.Linear(h1_nodes*10, h1_nodes*50)    # second fully connected layer
-        self.out = nn.Linear(h1_nodes*50, out_actions) # ouptut layer w
+        self.fc1 = nn.Linear(in_states, h1_nodes)   # first fully connected layer
+        self.out = nn.Linear(h1_nodes, out_actions) # ouptut layer w
 
     def forward(self, x):
         x = F.relu(self.fc1(x)) # Apply rectified linear unit (ReLU) activation
-        x = F.relu(self.fc2(x)) 
         x = self.out(x)         # Calculate output
         return x
 
