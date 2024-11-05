@@ -38,3 +38,5 @@ WORKDIR /arm_ws
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 RUN echo "source /arm_ws/install/setup.bash" >> ~/.bashrc
 RUN echo "export TURTLEBOT3_MODEL=waffle" >> ~/.bashrc
+RUN echo "source /usr/share/gazebo/setup.bash" >> ~/.bashrc
+RUN echo "source /usr/share/gazebo-11/setup.bash" >> ~/.bashrc
