@@ -15,7 +15,8 @@ RUN apt update     && \
 RUN apt install -y ros-humble-gazebo-*
 RUN apt install -y ros-humble-cartographer 
 RUN apt install -y ros-humble-cartographer-ros
-RUN apt install -y ros-humble-navigation2 ros-humble-nav2-bringup
+RUN apt install -y ros-humble-navigation2 
+RUN apt install -y  ros-humble-nav2-bringup 
 
 # CLONE TURTLEBOT3 GIT REPOS
 RUN mkdir -p /arm_ws/src
@@ -23,14 +24,14 @@ WORKDIR /arm_ws
 RUN /bin/bash -c '. /opt/ros/humble/setup.bash; colcon build --symlink-install'
 
 WORKDIR /arm_ws/src
+RUN git clone -b humble https://github.com/ROBOTIS-GIT/DynamixelSDK.git
 RUN git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
 RUN git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3.git
-RUN git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 WORKDIR /arm_ws
 RUN /bin/bash -c '. /opt/ros/humble/setup.bash; colcon build --symlink-install'
 
 WORKDIR /arm_ws/src
-RUN git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+RUN git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 WORKDIR /arm_ws
 RUN /bin/bash -c '. /opt/ros/humble/setup.bash; colcon build --symlink-install'
 
