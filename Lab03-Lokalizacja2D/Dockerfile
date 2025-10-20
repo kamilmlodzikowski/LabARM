@@ -23,23 +23,14 @@ WORKDIR /arm_ws
 RUN /bin/bash -c '. /opt/ros/humble/setup.bash; colcon build --symlink-install'
 
 WORKDIR /arm_ws/src
-RUN git clone -b humble https://github.com/ROBOTIS-GIT/DynamixelSDK.git
 RUN git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
 RUN git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3.git
-WORKDIR /arm_ws
-RUN /bin/bash -c '. /opt/ros/humble/setup.bash; colcon build --symlink-install'
-
-WORKDIR /arm_ws/src
 RUN git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 WORKDIR /arm_ws
 RUN /bin/bash -c '. /opt/ros/humble/setup.bash; colcon build --symlink-install'
 
 WORKDIR /arm_ws/src
-RUN git clone https://github.com/kamilmlodzikowski/arm05_sim.git
-# WORKDIR /arm_ws/src/arm05_sim/launch
-# RUN chmod +x world.launch.py
-WORKDIR /arm_ws/src/arm05_sim/scripts_arm05
-RUN chmod +x spawn_aruco.py
+RUN git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 WORKDIR /arm_ws
 RUN /bin/bash -c '. /opt/ros/humble/setup.bash; colcon build --symlink-install'
 
