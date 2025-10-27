@@ -24,11 +24,10 @@ WORKDIR /arm_ws
 RUN /bin/bash -c '. /opt/ros/humble/setup.bash; colcon build --symlink-install'
 
 WORKDIR /arm_ws/src
+RUN git clone -b humble https://github.com/ROBOTIS-GIT/DynamixelSDK.git
 RUN git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
 RUN git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3.git
-RUN git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 WORKDIR /arm_ws
-RUN /bin/bash -c '. /opt/ros/humble/setup.bash; colcon build --symlink-install'
 RUN /bin/bash -c '. /opt/ros/humble/setup.bash; colcon build --symlink-install'
 
 WORKDIR /arm_ws/src
