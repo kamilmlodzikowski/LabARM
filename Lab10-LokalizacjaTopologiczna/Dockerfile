@@ -30,7 +30,7 @@ RUN ldconfig
 RUN mkdir bags
 WORKDIR /arm_ws/bags
 RUN wget http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/machine_hall/MH_03_medium/MH_03_medium.bag
-RUN rosbags-convert --src MH_03_medium.bag --dst MH_03_medium
+RUN rosbags-convert --src MH_03_medium.bag --dst MH_03_medium --dst-storage sqlite3 --dst-version 8
 RUN rm MH_03_medium.bag
 
 # FILL BASHRC

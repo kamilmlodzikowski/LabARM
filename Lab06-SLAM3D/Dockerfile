@@ -35,7 +35,7 @@ WORKDIR /arm_ws/bags
 RUN wget http://www.aisl.cs.tut.ac.jp/databases/hdl_graph_slam/hdl_400.bag.tar.gz
 RUN tar -zxvf hdl_400.bag.tar.gz
 RUN rm hdl_400.bag.tar.gz
-RUN rosbags-convert --src hdl_400.bag --dst hdl_400
+RUN rosbags-convert --src hdl_400.bag --dst hdl_400 --dst-storage sqlite3 --dst-version 8
 RUN rm hdl_400.bag
 
 # DOWNLOAD 2nd ROS Bag

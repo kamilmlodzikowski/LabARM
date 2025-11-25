@@ -54,8 +54,8 @@ RUN mkdir bags
 WORKDIR /arm_ws/bags
 RUN wget http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/machine_hall/MH_02_easy/MH_02_easy.bag
 RUN wget -O put_car.bag https://chmura.put.poznan.pl/s/9pkDucSDiPlwgsd/download
-RUN rosbags-convert --src MH_02_easy.bag --dst MH_02_easy
-RUN rosbags-convert --src put_car.bag --dst put_car
+RUN rosbags-convert --src MH_02_easy.bag --dst MH_02_easy --dst-storage sqlite3 --dst-version 8
+RUN rosbags-convert --src put_car.bag --dst put_car --dst-storage sqlite3 --dst-version 8
 RUN rm MH_02_easy.bag
 RUN rm put_car.bag
 
