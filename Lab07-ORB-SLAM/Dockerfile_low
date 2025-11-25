@@ -29,7 +29,7 @@ RUN printf "y" | /bin/bash ./scripts/install_prerequisites.sh recommended
 RUN mkdir build
 WORKDIR /Pangolin/build
 RUN cmake ..
-RUN make -j8
+RUN make -j4
 RUN make install
 
 # INSTALL ORB_SLAM3
