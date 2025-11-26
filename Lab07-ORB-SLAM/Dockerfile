@@ -29,18 +29,23 @@ RUN printf "y" | /bin/bash ./scripts/install_prerequisites.sh recommended
 RUN mkdir build
 WORKDIR /Pangolin/build
 RUN cmake ..
-RUN make -j8
+RUN make -j$parallel_workers
 RUN make install
 
 # INSTALL ORB_SLAM3
 WORKDIR /
 RUN git clone https://github.com/zang09/ORB-SLAM3-STEREO-FIXED ORB_SLAM3
 WORKDIR /ORB_SLAM3
+# enforce C++14
 RUN printf '%s \n' "add_compile_options(-std=c++14)" | cat - CMakeLists.txt > tmpfile && mv tmpfile CMakeLists.txt
-RUN chmod +x build.sh
-RUN /bin/bash build.sh
+# Make all 'make -j', 'make -j4', etc. use our parallel_workers value
+RUN sed -i "s/make -j[0-9]*/make -j${parallel_workers}/g" build.sh
+# run the build
+RUN chmod +x build.sh && /bin/bash build.sh
+# install Sophus
 WORKDIR /ORB_SLAM3/Thirdparty/Sophus/build
 RUN make install
+
 
 # ORB_SLAM3_ROS2
 WORKDIR /arm_ws/src
@@ -54,8 +59,8 @@ RUN mkdir bags
 WORKDIR /arm_ws/bags
 RUN wget http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/machine_hall/MH_02_easy/MH_02_easy.bag
 RUN wget -O put_car.bag https://chmura.put.poznan.pl/s/9pkDucSDiPlwgsd/download
-RUN rosbags-convert --src MH_02_easy.bag --dst MH_02_easy --dst-storage sqlite3 --dst-version 8
-RUN rosbags-convert --src put_car.bag --dst put_car --dst-storage sqlite3 --dst-version 8
+RUN rosbags-convert --src MH_02_easy.bag --dst MH_02_easy
+RUN rosbags-convert --src put_car.bag --dst put_car
 RUN rm MH_02_easy.bag
 RUN rm put_car.bag
 
