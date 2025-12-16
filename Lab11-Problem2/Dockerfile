@@ -11,12 +11,7 @@ ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPA
 # INSTALL SOME ESSENTIAL PROGRAMS
 RUN apt update     && \
     apt install -y    \
-        git wget bash-completion psmisc
-        
-RUN apt install -y ros-humble-gazebo-*
-RUN apt install -y ros-humble-cartographer 
-RUN apt install -y ros-humble-cartographer-ros
-RUN apt install -y ros-humble-navigation2 ros-humble-nav2-bringup
+        git wget bash-completion psmisc ros-humble-gazebo-* ros-humble-cartographer ros-humble-cartographer-ros ros-humble-navigation2 ros-humble-nav2-bringup
 
 # CLONE TURTLEBOT3 GIT REPOS
 RUN mkdir -p /arm_ws/src
