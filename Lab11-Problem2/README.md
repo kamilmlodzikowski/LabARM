@@ -1,7 +1,7 @@
 # Lab 11 - Problem 2
 ## Download Dockerfile and build image
 ```shell
-wget https://raw.githubusercontent.com/kamilmlodzikowski/LabARM/main/Lab11-Problem2/Dockerfile
+wget https://raw.githubusercontent.com/kamilmlodzikowski/LabARM/main/Lab11-Problem2/Dockerfile -o Dockerfile
 wget https://raw.githubusercontent.com/kamilmlodzikowski/LabARM/main/Lab11-Problem2/arm_11_build.sh
 bash ./arm_11_build.sh 4
 ```
