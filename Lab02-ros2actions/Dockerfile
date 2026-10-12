@@ -1,4 +1,4 @@
-FROM osrf/ros:humble-desktop-full
+FROM osrf/ros:lyrical-desktop-full
 
 # SETUP ENVS
 ENV LANG=C.UTF-8
@@ -12,24 +12,22 @@ RUN apt update     && \
     apt install -y    \
         git wget bash-completion
         
-RUN apt install -y ros-humble-ros-gz
-RUN apt install -y ros-humble-cartographer 
-RUN apt install -y ros-humble-cartographer-ros
-RUN apt install -y ros-humble-navigation2 ros-humble-nav2-bringup
+RUN apt install -y \
+        ros-lyrical-ros-gz \
+        ros-lyrical-navigation2 \
+        ros-lyrical-nav2-bringup
 
 # CLONE TURTLEBOT3 GIT REPOS
 RUN mkdir -p /arm_ws/src
 WORKDIR /arm_ws
-RUN /bin/bash -c '. /opt/ros/humble/setup.bash; colcon build --symlink-install'
+RUN /bin/bash -c '. /opt/ros/lyrical/setup.bash; colcon build --symlink-install'
 
 WORKDIR /arm_ws/src
 RUN git clone https://github.com/kamilmlodzikowski/arm02_sim.git
 WORKDIR /arm_ws
-RUN /bin/bash -c '. /opt/ros/humble/setup.bash; colcon build --symlink-install'
+RUN /bin/bash -c '. /opt/ros/lyrical/setup.bash; colcon build --symlink-install'
 
 # FILL BASHRC
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 RUN echo "source /arm_ws/install/setup.bash" >> ~/.bashrc
 RUN echo 'export TURTLEBOT3=waffle' >> ~/.bashrc
-RUN echo "source /usr/share/gazebo/setup.bash" >> ~/.bashrc
-RUN echo "source /usr/share/gazebo-11/setup.bash" >> ~/.bashrc
