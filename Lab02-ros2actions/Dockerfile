@@ -8,7 +8,9 @@ ENV NVIDIA_VISIBLE_DEVICES="${NVIDIA_VISIBLE_DEVICES:-all}"
 ENV NVIDIA_DRIVER_CAPABILITIES="${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics"
 
 # INSTALL SOME ESSENTIAL PROGRAMS
+# (upgrade first: packages installed below are built against newer ROS core packages than the base image)
 RUN apt update     && \
+    apt upgrade -y && \
     apt install -y    \
         git wget bash-completion
         
