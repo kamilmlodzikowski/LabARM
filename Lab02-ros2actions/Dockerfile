@@ -33,3 +33,5 @@ RUN /bin/bash -c '. /opt/ros/lyrical/setup.bash; colcon build --symlink-install'
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 RUN echo "source /arm_ws/install/setup.bash" >> ~/.bashrc
 RUN echo 'export TURTLEBOT3=waffle' >> ~/.bashrc
+# keep Gazebo traffic on this computer, so simulations of different students do not mix
+RUN echo 'export GZ_IP=127.0.0.1' >> ~/.bashrc
