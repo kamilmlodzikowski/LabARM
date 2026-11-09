@@ -30,6 +30,7 @@ docker run -it \
     --env="NVIDIA_DRIVER_CAPABILITIES=all" \
     --privileged \
     --network=host \
+    --shm-size=1g \
     --name="$ROS_CONTAINER" \
     $ROS_IMAGE \
     /bin/bash

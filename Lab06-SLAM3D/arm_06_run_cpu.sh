@@ -27,6 +27,7 @@ docker run -it \
     --volume="$XAUTH:$XAUTH" \
     --privileged \
     --network=host \
+    --shm-size=1g \
     --name="$ROS_CONTAINER" \
     $ROS_IMAGE \
     /bin/bash
