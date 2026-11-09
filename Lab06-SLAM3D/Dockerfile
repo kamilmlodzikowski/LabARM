@@ -79,17 +79,23 @@ RUN echo '<?xml version="1.0" encoding="UTF-8" ?>\n\
 </profiles>' > /arm_ws/fastdds_shm.xml
 ENV FASTRTPS_DEFAULT_PROFILES_FILE=/arm_ws/fastdds_shm.xml
 
+# FILE DIALOGS for GLIM offline_viewer ("Do optimization?" prompt, Open Map, Export Points)
+RUN apt install -y zenity
+
 # PREPARE CONFIGS
 RUN mkdir -p /arm_ws/config /arm_ws/results
 # KISS-ICP: KITTI scans have no per-point timestamps (and are already motion-compensated)
 RUN cp /arm_ws/src/kiss-icp/ros/config/config.yaml /arm_ws/config/kiss_icp.yaml && \
     sed -i 's/deskew: True/deskew: False/; s/# voxel_size: 1.0 .*/voxel_size: 1.0/' /arm_ws/config/kiss_icp.yaml
-# GLIM: CPU, LiDAR-only (CT-ICP odometry, no IMU factors), both bags publish /velodyne_points
+# GLIM: CPU, LiDAR-only (CT-ICP odometry, no IMU factors), both bags publish /velodyne_points;
+# k_correspondences 20 for the sparse 32-beam lidar of hdl_400 (odometry often fails there with 10)
 RUN cp -r /opt/ros/jazzy/share/glim/config /arm_ws/config/glim && \
     cd /arm_ws/config/glim && \
     sed -i 's/"config_odometry": ".*"/"config_odometry": "config_odometry_ct.json"/; s/"config_sub_mapping": ".*"/"config_sub_mapping": "config_sub_mapping_cpu.json"/; s/"config_global_mapping": ".*"/"config_global_mapping": "config_global_mapping_cpu.json"/' config.json && \
     sed -i 's/"enable_imu": true/"enable_imu": false/' config_sub_mapping_cpu.json config_global_mapping_cpu.json && \
-    sed -i 's|"points_topic": ".*"|"points_topic": "/velodyne_points"|' config_ros.json
+    sed -i 's|"points_topic": ".*"|"points_topic": "/velodyne_points"|' config_ros.json && \
+    sed -i 's/"k_correspondences": 10/"k_correspondences": 20/' config_preprocess.json && \
+    grep -q '"k_correspondences": 20' config_preprocess.json
 
 # KITTI GROUND TRUTH in TUM format: /odometry_gt has positions of the LiDAR, but orientations
 # of the camera, so rotate the orientations to the LiDAR frame (otherwise RPE is wrong)
@@ -101,6 +107,8 @@ gt = np.loadtxt('odometry_gt.tum'); \
 gt[:, 4:8] = (R.from_quat(gt[:, 4:8]) * R.from_quat(gt[0, 4:8]).inv()).as_quat(); \
 np.savetxt('kitti_gt.tum', gt, fmt='%.9f')" && \
     rm odometry_gt.tum
+# evo picks the non-interactive Agg backend when run without a display, so -p would show nothing
+RUN evo_config set plot_backend TkAgg
 
 # FILL BASHRC
 WORKDIR /arm_ws

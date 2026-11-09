@@ -11,7 +11,7 @@ The ```arm_06_build.sh``` script accepts number of workers as an argument for pa
 bash ./arm_06_build.sh <number_of_workers>
 ```
 
-The image is based on `osrf/ros:jazzy-desktop-full` and contains [KISS-ICP](https://github.com/PRBonn/kiss-icp), [GLIM](https://github.com/koide3/glim) (CPU version), [evo](https://github.com/MichaelGrupp/evo) and two datasets (KITTI 00 excerpt, hdl_400). The build downloads ~1.4 GB of data and needs ~10 GB of free disk space.
+The image is based on `osrf/ros:jazzy-desktop-full` and contains [KISS-ICP](https://github.com/PRBonn/kiss-icp), [GLIM](https://github.com/koide3/glim) (CPU version), [evo](https://github.com/MichaelGrupp/evo) and two datasets (KITTI 00 excerpt, hdl_400). The build downloads ~1.4 GB of data; the image takes ~10 GB and the build needs ~15 GB of free disk space.
 
 ## Running on Nvidia GPU
 ```shell
