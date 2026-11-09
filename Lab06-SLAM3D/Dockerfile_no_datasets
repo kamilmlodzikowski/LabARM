@@ -95,3 +95,6 @@ RUN evo_config set plot_backend TkAgg
 WORKDIR /arm_ws
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 RUN echo "source /arm_ws/install/setup.bash" >> ~/.bashrc
+
+# COMPARISON SCRIPT for the task (runs with the Python environment of evo)
+ADD --chmod=755 https://raw.githubusercontent.com/kamilmlodzikowski/LabARM/main/Lab06-SLAM3D/arm_06_compare.py /usr/local/bin/arm_06_compare
