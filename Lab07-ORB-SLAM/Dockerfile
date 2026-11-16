@@ -27,18 +27,6 @@ ENV PIPX_HOME=/opt/pipx
 ENV PIPX_BIN_DIR=/usr/local/bin
 RUN pipx install rosbags
 
-# DOWNLOAD ROS Bags and convert them to ROS2
-RUN mkdir -p /arm_ws/bags
-WORKDIR /arm_ws/bags
-# TUM-VI room4 (https://cvg.cit.tum.de/data/datasets/visual-inertial-dataset, CC BY 4.0)
-RUN wget -q -O room4.bag https://cvg.cit.tum.de/tumvi/calibrated/512_16/dataset-room4_512_16.bag && \
-    rosbags-convert --src room4.bag --dst room4 --dst-storage mcap && \
-    rm room4.bag
-# PUT car around the Piotrowo campus
-RUN wget -q -O put_car.bag https://chmura.put.poznan.pl/s/9pkDucSDiPlwgsd/download && \
-    rosbags-convert --src put_car.bag --dst put_car --dst-storage mcap && \
-    rm put_car.bag
-
 # INSTALL Pangolin (viewer used by ORB-SLAM3)
 WORKDIR /
 RUN git clone -b v0.9.6 --depth 1 https://github.com/stevenlovegrove/Pangolin.git
@@ -72,6 +60,9 @@ RUN sed -i 's/    mvDepth = vector<float>(Nleft,-1.0f);/    mvDepth = vector<flo
     grep -q "mvuRight = vector<float>(Nleft + Nright,-1);" src/Frame.cc
 # Make all 'make -j', 'make -j4', etc. use our parallel_workers value
 RUN sed -i "s/make -j[0-9]*/make -j${parallel_workers}/g" build.sh
+# build only the ORB_SLAM3 library, not the ~30 example programs (not used in the labs)
+RUN sed -i '/Configuring and building ORB_SLAM3/,$ s/^make -j\(.*\)$/make -j\1 ORB_SLAM3/' build.sh && \
+    tail -n 1 build.sh | grep -q "ORB_SLAM3$"
 # Sophus is header-only, its tests do not build with GCC 15 (-Werror)
 RUN sed -i '/cd ..\/..\/Sophus/,/make -j/ s/-DCMAKE_BUILD_TYPE=Release/-DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF/' build.sh && \
     grep -q BUILD_TESTS=OFF build.sh
@@ -91,6 +82,24 @@ WORKDIR /arm_ws/src/orbslam3_ros2/vocabulary
 RUN tar xzf ORBvoc.txt.tar.gz
 WORKDIR /arm_ws
 RUN /bin/bash -c ". /opt/ros/lyrical/setup.bash; colcon build --parallel-workers ${parallel_workers} --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release"
+
+# DOWNLOAD ROS Bags (~5 GB) and convert them to ROS2; with datasets=false (arm_07_build.sh --no-datasets)
+# they are skipped and can be added later from a drive with arm_07_load_datasets.sh
+ARG datasets=true
+RUN mkdir -p /arm_ws/bags
+WORKDIR /arm_ws/bags
+# TUM-VI room4 (https://cvg.cit.tum.de/data/datasets/visual-inertial-dataset, CC BY 4.0)
+RUN if [ "$datasets" = true ]; then \
+        wget -q -O room4.bag https://cvg.cit.tum.de/tumvi/calibrated/512_16/dataset-room4_512_16.bag && \
+        rosbags-convert --src room4.bag --dst room4 --dst-storage mcap && \
+        rm room4.bag; \
+    fi
+# PUT car around the Piotrowo campus
+RUN if [ "$datasets" = true ]; then \
+        wget -q -O put_car.bag https://chmura.put.poznan.pl/s/9pkDucSDiPlwgsd/download && \
+        rosbags-convert --src put_car.bag --dst put_car --dst-storage mcap && \
+        rm put_car.bag; \
+    fi
 
 # FILL BASHRC
 WORKDIR /arm_ws
