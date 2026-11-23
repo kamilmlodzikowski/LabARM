@@ -10,7 +10,7 @@
 #
 # Usage: bash make_dataset_drive.sh [options] <target_dir> [lab ...]
 #   target_dir   the mounted drive (e.g. /media/<user>/<drive>) or a local directory
-#   lab          lab number(s): 06 07 (default: all of them)
+#   lab          lab number(s): 06 07 10 (default: all of them)
 # Options:
 #   -j N         parallel compilers when an image has to be built
 #                (default: half of the CPUs, at most available memory / 2.5 GB)
@@ -21,8 +21,8 @@ set -e
 # LABS: number -> directory in this repo and on the drive, and a file in /arm_ws/bags of the image
 # that is there only when the image has the datasets. The image is arm/labNN, the load script
 # <directory>/arm_NN_load_datasets.sh and the image is built from <directory>/Dockerfile.
-declare -A LAB_DIR=( [06]=Lab06-SLAM3D [07]=Lab07-ORB-SLAM )
-declare -A LAB_CHECK=( [06]=hdl_400/metadata.yaml [07]=room4/metadata.yaml )
+declare -A LAB_DIR=( [06]=Lab06-SLAM3D [07]=Lab07-ORB-SLAM [10]=Lab10-LokalizacjaTopologiczna )
+declare -A LAB_CHECK=( [06]=hdl_400/metadata.yaml [07]=room4/metadata.yaml [10]=fr3_long_office_household/metadata.yaml )
 
 TOOLS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(dirname "$TOOLS_DIR")"

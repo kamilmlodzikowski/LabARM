@@ -2,7 +2,7 @@
 Scripts for preparing the labs. Students do not need them.
 
 ## Dataset drive
-Labs 06 and 07 can be built without downloading the datasets (`arm_06_build_no_datasets.sh`, `arm_07_build.sh --no-datasets`); the students then add them to the image from a drive passed around the lab with `arm_NN_load_datasets.sh`. The drive has one directory per lab:
+Labs 06, 07 and 10 can be built without downloading the datasets (`arm_06_build_no_datasets.sh`, `arm_07_build.sh --no-datasets`, `arm_10_build.sh --no-datasets`); the students then add them to the image from a drive passed around the lab with `arm_NN_load_datasets.sh`. The drive has one directory per lab:
 ```
 Lab06-SLAM3D/
     README.txt                 instructions for the students (Polish), from drive/Lab06-SLAM3D/README.txt
@@ -27,7 +27,7 @@ Options (`bash make_dataset_drive.sh --help`):
 - `--rebuild` builds the images from the current Dockerfiles even if images with the datasets exist (use it after changing the Dockerfiles; the docker cache keeps the downloaded datasets),
 - `--no-cache` also downloads everything again (e.g. when a dataset changed under the same URL).
 
-Space needed: ~8.5 GB on the drive (Lab 06 ~3 GB, Lab 07 ~5.2 GB; the largest file has ~2.9 GB, so FAT32 still works, but ext4 or exFAT is safer) and, when the images are built, ~10 GB (Lab 06) and ~24 GB (Lab 07) for the images.
+Space needed: ~10.6 GB on the drive (Lab 06 ~3.3 GB, Lab 07 ~5.2 GB, Lab 10 ~2.1 GB; the largest file has ~2.9 GB, so FAT32 still works, but ext4 or exFAT is safer) and, when the images are built, ~14 GB (Lab 06), ~24 GB (Lab 07) and ~16 GB (Lab 10) for the images.
 
 ### Several drives
 Make the directories once on the local disk, then copy them to each drive and check the copy after reconnecting the drive (right after copying, the files would be read back from memory):
